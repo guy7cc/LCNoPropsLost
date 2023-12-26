@@ -24,7 +24,6 @@ namespace LCNoPropsLost.Patches
             int i = 0;
             for (; i < code.Count - 2; i++)
             {
-                LCNoPropsLostPlugin.Logger.LogInfo(i + code[i].opcode.ToString());
                 if (code[i].opcode == OpCodes.Call
                     && code[i].Calls(getter)
                     && code[i + 1].opcode == OpCodes.Ldfld
@@ -42,6 +41,7 @@ namespace LCNoPropsLost.Patches
                 var instructionsToInsert = new List<CodeInstruction>();
                 instructionsToInsert.Add(new CodeInstruction(OpCodes.Br, label));
                 code.InsertRange(insertionIndex, instructionsToInsert);
+                LCNoPropsLostPlugin.Logger.LogInfo("Patch successful");
             }
 
             return code;
